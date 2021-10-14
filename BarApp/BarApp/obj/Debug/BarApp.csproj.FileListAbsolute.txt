@@ -1,0 +1,12 @@
+C:\Users\Administrator\source\repos\BarApp\BarApp\bin\Debug\BarApp.exe.config
+C:\Users\Administrator\source\repos\BarApp\BarApp\bin\Debug\BarApp.exe
+C:\Users\Administrator\source\repos\BarApp\BarApp\bin\Debug\BarApp.pdb
+C:\Users\Administrator\source\repos\BarApp\BarApp\bin\Debug\EntityFramework.dll
+C:\Users\Administrator\source\repos\BarApp\BarApp\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Administrator\source\repos\BarApp\BarApp\bin\Debug\EntityFramework.xml
+C:\Users\Administrator\source\repos\BarApp\BarApp\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Administrator\source\repos\BarApp\BarApp\obj\Debug\BarApp.csprojAssemblyReference.cache
+C:\Users\Administrator\source\repos\BarApp\BarApp\obj\Debug\BarApp.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\BarApp\BarApp\obj\Debug\BarApp.csproj.CopyComplete
+C:\Users\Administrator\source\repos\BarApp\BarApp\obj\Debug\BarApp.exe
+C:\Users\Administrator\source\repos\BarApp\BarApp\obj\Debug\BarApp.pdb

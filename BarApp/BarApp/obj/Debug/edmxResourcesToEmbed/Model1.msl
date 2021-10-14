@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GitBuzzedBarModelStoreContainer" CdmEntityContainer="GitBuzzedBarEntities">
+    <EntitySetMapping Name="Drinks">
+      <EntityTypeMapping TypeName="GitBuzzedBarModel.Drink">
+        <MappingFragment StoreEntitySet="Drink">
+          <ScalarProperty Name="drinkID" ColumnName="drinkID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DrinkIngredients">
+      <EntityTypeMapping TypeName="GitBuzzedBarModel.DrinkIngredient">
+        <MappingFragment StoreEntitySet="DrinkIngredient">
+          <ScalarProperty Name="ingID" ColumnName="ingID" />
+          <ScalarProperty Name="drinkID" ColumnName="drinkID" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ingredients">
+      <EntityTypeMapping TypeName="GitBuzzedBarModel.Ingredient">
+        <MappingFragment StoreEntitySet="Ingredient">
+          <ScalarProperty Name="ingID" ColumnName="ingID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="InsertIngredient" FunctionName="GitBuzzedBarModel.Store.InsertIngredient" />
+  </EntityContainerMapping>
+</Mapping>

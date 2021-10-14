@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GitBuzzedBarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Drink">
+    <Key>
+      <PropertyRef Name="drinkID" />
+    </Key>
+    <Property Name="drinkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DrinkIngredients" Relationship="Self.fk_drinkIngredient_drinkID" FromRole="Drink" ToRole="DrinkIngredient" />
+  </EntityType>
+  <EntityType Name="DrinkIngredient">
+    <Key>
+      <PropertyRef Name="ingID" />
+      <PropertyRef Name="drinkID" />
+    </Key>
+    <Property Name="ingID" Type="Int32" Nullable="false" />
+    <Property Name="drinkID" Type="Int32" Nullable="false" />
+    <Property Name="amount" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Drink" Relationship="Self.fk_drinkIngredient_drinkID" FromRole="DrinkIngredient" ToRole="Drink" />
+    <NavigationProperty Name="Ingredient" Relationship="Self.fk_drinkIngredient_ingID" FromRole="DrinkIngredient" ToRole="Ingredient" />
+  </EntityType>
+  <EntityType Name="Ingredient">
+    <Key>
+      <PropertyRef Name="ingID" />
+    </Key>
+    <Property Name="ingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DrinkIngredients" Relationship="Self.fk_drinkIngredient_ingID" FromRole="Ingredient" ToRole="DrinkIngredient" />
+  </EntityType>
+  <Association Name="fk_drinkIngredient_drinkID">
+    <End Role="Drink" Type="Self.Drink" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drink">
+        <PropertyRef Name="drinkID" />
+      </Principal>
+      <Dependent Role="DrinkIngredient">
+        <PropertyRef Name="drinkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_drinkIngredient_ingID">
+    <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="ingID" />
+      </Principal>
+      <Dependent Role="DrinkIngredient">
+        <PropertyRef Name="ingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GitBuzzedBarEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Drinks" EntityType="Self.Drink" />
+    <EntitySet Name="DrinkIngredients" EntityType="Self.DrinkIngredient" />
+    <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+    <AssociationSet Name="fk_drinkIngredient_drinkID" Association="Self.fk_drinkIngredient_drinkID">
+      <End Role="Drink" EntitySet="Drinks" />
+      <End Role="DrinkIngredient" EntitySet="DrinkIngredients" />
+    </AssociationSet>
+    <AssociationSet Name="fk_drinkIngredient_ingID" Association="Self.fk_drinkIngredient_ingID">
+      <End Role="Ingredient" EntitySet="Ingredients" />
+      <End Role="DrinkIngredient" EntitySet="DrinkIngredients" />
+    </AssociationSet>
+    <FunctionImport Name="InsertIngredient">
+      <Parameter Name="name" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GitBuzzedBarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="drinkID" />
+          </Key>
+          <Property Name="drinkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DrinkIngredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+            <PropertyRef Name="drinkID" />
+          </Key>
+          <Property Name="ingID" Type="int" Nullable="false" />
+          <Property Name="drinkID" Type="int" Nullable="false" />
+          <Property Name="amount" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="ingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="fk_drinkIngredient_drinkID">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="drinkID" />
+            </Principal>
+            <Dependent Role="DrinkIngredient">
+              <PropertyRef Name="drinkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_drinkIngredient_ingID">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingID" />
+            </Principal>
+            <Dependent Role="DrinkIngredient">
+              <PropertyRef Name="ingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="InsertIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="GitBuzzedBarModelStoreContainer">
+          <EntitySet Name="Drink" EntityType="Self.Drink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DrinkIngredient" EntityType="Self.DrinkIngredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_drinkIngredient_drinkID" Association="Self.fk_drinkIngredient_drinkID">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="DrinkIngredient" EntitySet="DrinkIngredient" />
+          </AssociationSet>
+          <AssociationSet Name="fk_drinkIngredient_ingID" Association="Self.fk_drinkIngredient_ingID">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="DrinkIngredient" EntitySet="DrinkIngredient" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GitBuzzedBarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="drinkID" />
+          </Key>
+          <Property Name="drinkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DrinkIngredients" Relationship="Self.fk_drinkIngredient_drinkID" FromRole="Drink" ToRole="DrinkIngredient" />
+        </EntityType>
+        <EntityType Name="DrinkIngredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+            <PropertyRef Name="drinkID" />
+          </Key>
+          <Property Name="ingID" Type="Int32" Nullable="false" />
+          <Property Name="drinkID" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Drink" Relationship="Self.fk_drinkIngredient_drinkID" FromRole="DrinkIngredient" ToRole="Drink" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.fk_drinkIngredient_ingID" FromRole="DrinkIngredient" ToRole="Ingredient" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="ingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DrinkIngredients" Relationship="Self.fk_drinkIngredient_ingID" FromRole="Ingredient" ToRole="DrinkIngredient" />
+        </EntityType>
+        <Association Name="fk_drinkIngredient_drinkID">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="drinkID" />
+            </Principal>
+            <Dependent Role="DrinkIngredient">
+              <PropertyRef Name="drinkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_drinkIngredient_ingID">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingID" />
+            </Principal>
+            <Dependent Role="DrinkIngredient">
+              <PropertyRef Name="ingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GitBuzzedBarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Drinks" EntityType="Self.Drink" />
+          <EntitySet Name="DrinkIngredients" EntityType="Self.DrinkIngredient" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <AssociationSet Name="fk_drinkIngredient_drinkID" Association="Self.fk_drinkIngredient_drinkID">
+            <End Role="Drink" EntitySet="Drinks" />
+            <End Role="DrinkIngredient" EntitySet="DrinkIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="fk_drinkIngredient_ingID" Association="Self.fk_drinkIngredient_ingID">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="DrinkIngredient" EntitySet="DrinkIngredients" />
+          </AssociationSet>
+          <FunctionImport Name="InsertIngredient">
+            <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GitBuzzedBarModelStoreContainer" CdmEntityContainer="GitBuzzedBarEntities">
+          <EntitySetMapping Name="Drinks">
+            <EntityTypeMapping TypeName="GitBuzzedBarModel.Drink">
+              <MappingFragment StoreEntitySet="Drink">
+                <ScalarProperty Name="drinkID" ColumnName="drinkID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DrinkIngredients">
+            <EntityTypeMapping TypeName="GitBuzzedBarModel.DrinkIngredient">
+              <MappingFragment StoreEntitySet="DrinkIngredient">
+                <ScalarProperty Name="ingID" ColumnName="ingID" />
+                <ScalarProperty Name="drinkID" ColumnName="drinkID" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="GitBuzzedBarModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="ingID" ColumnName="ingID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="InsertIngredient" FunctionName="GitBuzzedBarModel.Store.InsertIngredient" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

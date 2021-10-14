@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GitBuzzedBarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Drink">
+    <Key>
+      <PropertyRef Name="drinkID" />
+    </Key>
+    <Property Name="drinkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="DrinkIngredient">
+    <Key>
+      <PropertyRef Name="ingID" />
+      <PropertyRef Name="drinkID" />
+    </Key>
+    <Property Name="ingID" Type="int" Nullable="false" />
+    <Property Name="drinkID" Type="int" Nullable="false" />
+    <Property Name="amount" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Ingredient">
+    <Key>
+      <PropertyRef Name="ingID" />
+    </Key>
+    <Property Name="ingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="fk_drinkIngredient_drinkID">
+    <End Role="Drink" Type="Self.Drink" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drink">
+        <PropertyRef Name="drinkID" />
+      </Principal>
+      <Dependent Role="DrinkIngredient">
+        <PropertyRef Name="drinkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_drinkIngredient_ingID">
+    <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DrinkIngredient" Type="Self.DrinkIngredient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="ingID" />
+      </Principal>
+      <Dependent Role="DrinkIngredient">
+        <PropertyRef Name="ingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="InsertIngredient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="GitBuzzedBarModelStoreContainer">
+    <EntitySet Name="Drink" EntityType="Self.Drink" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DrinkIngredient" EntityType="Self.DrinkIngredient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_drinkIngredient_drinkID" Association="Self.fk_drinkIngredient_drinkID">
+      <End Role="Drink" EntitySet="Drink" />
+      <End Role="DrinkIngredient" EntitySet="DrinkIngredient" />
+    </AssociationSet>
+    <AssociationSet Name="fk_drinkIngredient_ingID" Association="Self.fk_drinkIngredient_ingID">
+      <End Role="Ingredient" EntitySet="Ingredient" />
+      <End Role="DrinkIngredient" EntitySet="DrinkIngredient" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
